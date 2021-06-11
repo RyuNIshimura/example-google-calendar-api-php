@@ -3,7 +3,7 @@
 composer install
 ```
 
-サービスアカウントの`credentials.json`をProjectRootにおいてください。
+サービスアカウントの`credentials.json`をProjectルートに置いてください。
 
 ### Note
 `google/apiclient`のみインストール
