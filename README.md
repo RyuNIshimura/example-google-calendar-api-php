@@ -3,7 +3,7 @@
 composer install
 ```
 
-サービスアカウントの`credentials.json`をProjectルートに置いてください。
+サービスアカウントの`key.json`をProjectルートに置いてください。(このプロジェクトは、`credentials.json`に変更している)
 
 ### Note
 `google/apiclient`のみインストール
@@ -28,7 +28,7 @@ php main.php
 
 2.サービスアカウントの作成 → 権限を委任にチェックし、クライアントIDをコピー(手順4で使う)
 
-3.サービスアカウントの`secrets.json`をダウンロード(このプロジェクトは、`credentials.json`に変更している)
+3.サービスアカウントの`key.json`をダウンロード(このプロジェクトは、`credentials.json`に変更している)
 
 4.Google Workspaceの管理者側で「[ドメイン全体の権限をサービスアカウントに委任する](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority)」を設定する。
 
