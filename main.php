@@ -1,34 +1,47 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-$aimJsonPath = __DIR__ . '/credentials.json';
+try {
+  $aimJsonPath = __DIR__ . '/credentials.json';
+  $ownerAccount = 'owner@example.com';
+  $userAccount = 'user@example.com';
 
-$client = new Google\Client();
-$client->setApplicationName('Example Project');
-// $client->addScope(Google_Service_Calendar::CALENDAR_EVENTS);
-$client->setScopes(array(Google_Service_Calendar::CALENDAR));
-$client->setSubject('owner@example.com'); // サービスアカウントの場合必要
-$client->setAuthConfig($aimJsonPath);
-print "Google Clinet Settings OK\n";
+  $client = new Google\Client();
+  $client->setApplicationName('project name');
+  $client->setScopes(array(Google_Service_Calendar::CALENDAR));
+  $client->setSubject($ownerAccount); // サービスアカウントの場合必須
+  $client->setAuthConfig($aimJsonPath);
 
-$service = new Google_Service_Calendar($client);
-print "Google Service Calendar Settings OK\n";
+  $service = new Google_Service_Calendar($client);
 
-$email = 'user@example.com';
-$calendarId = $email;
-print "calendarId: $calendarId.\n";
+  $email = $userAccount;
+  $calendarId = $email;
 
-// options: 'timeZone' => 'Asia/Tokyo',
-$event = new Google_Service_Calendar_Event(array(
-  'summary' => 'PHP Google Calendar API Test',
-  'description' => 'PHP Google Calendar API Test',
-  'start' => array(
-    'date' => '2021-06-11',
-  ),
-  'end' => array(
-    'date' => '2021-06-11',
-  ),
-));
+  // RFC3339
+  date_default_timezone_set('Asia/Tokyo'); // scope is the lifetime of the executing script
+  $start = date("Y-m-d\TH:i:sP"); // Now
+  $end = date("Y-m-d\TH:i:sP",strtotime("+2 hour")); // 2 hours later
 
-$event = $service->events->insert($calendarId, $event);
-printf('Event created: %s\n', $event->htmlLink);
+  $event = new Google_Service_Calendar_Event(array(
+    'summary' => 'PHP Google Calendar API Test Title',
+    'description' => "PHP Google Calendar API Test description1.\nPHP Google Calendar API Test description2.",
+    'start' => array(
+      'dateTime' => $start,
+      'timeZone' => 'Asia/Tokyo',
+    ),
+    'end' => array(
+      'dateTime' => $end,
+      'timeZone' => 'Asia/Tokyo',
+    ),
+    'colorId' => '11', // 1 ~ 11
+    "overrides" => array(
+      "method" => "popup", // or email
+      "minutes" =>  "10" // 10 minutes ago. 0 ~ 40320 (4 weeks in minutes).
+    )
+  ));
+
+  $event = $service->events->insert($calendarId, $event);
+  printf('success!');
+} catch (Exception $e) {
+  printf('failed!' . $e);
+}
