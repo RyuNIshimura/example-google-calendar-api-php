@@ -9,7 +9,7 @@ try {
   $client = new Google\Client();
   $client->setApplicationName('project name');
   $client->setScopes(array(Google_Service_Calendar::CALENDAR));
-  $client->setSubject($ownerAccount); // サービスアカウントの場合必須
+  $client->setSubject($ownerAccount); // Required for service accounts
   $client->setAuthConfig($aimJsonPath);
 
   $service = new Google_Service_Calendar($client);
@@ -17,8 +17,8 @@ try {
   $email = $userAccount;
   $calendarId = $email;
 
-  // RFC3339
   date_default_timezone_set('Asia/Tokyo'); // scope is the lifetime of the executing script
+  // RFC3339
   $start = date("Y-m-d\TH:i:sP"); // Now
   $end = date("Y-m-d\TH:i:sP",strtotime("+2 hour")); // 2 hours later
 
