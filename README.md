@@ -24,7 +24,7 @@ Step2.Create a service account → Check Delegation for permissions and copy the
 
 Step3.Download the service account `key.json` (this project has changed to` credentials.json`)
 
-Step4. Set "[ドメイン全体の権限をサービスアカウントに委任する](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority)」" on the Google Workspace administrator side.
+Step4. Set client ID([ドメイン全体の権限をサービスアカウントに委任する](https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority)) on the Google Workspace administrator side.
 
 Step5.OK!
 
